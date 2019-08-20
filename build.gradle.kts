@@ -19,7 +19,7 @@ dependencies {
     testImplementation(kotlin("compiler-embeddable"))
 }
 
-group = "pl.cdbr"
+group = "com.github.mnowak32"
 version = "1.0.0"
 description = "A Kotlin conversion of Will Glozer's scrypt for Java."
 java.sourceCompatibility = JavaVersion.VERSION_1_8

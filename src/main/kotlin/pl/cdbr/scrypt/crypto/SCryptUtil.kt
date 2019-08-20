@@ -8,8 +8,6 @@ import com.lambdaworks.codec.Base64.encode
 import java.io.UnsupportedEncodingException
 import java.security.GeneralSecurityException
 import java.security.SecureRandom
-import kotlin.experimental.or
-import kotlin.experimental.xor
 import kotlin.math.pow
 
 /**
@@ -93,7 +91,7 @@ object SCryptUtil {
 
             val derived1 = SCrypt.scrypt(passwd.toByteArray(chSet), salt, n, r, p, dkLen)
 
-            return derived0.contentEquals(derived1)
+            return derived0 contentEquals derived1
         } catch (e: UnsupportedEncodingException) {
             throw IllegalStateException("JVM doesn't support UTF-8?")
         } catch (e: GeneralSecurityException) {
