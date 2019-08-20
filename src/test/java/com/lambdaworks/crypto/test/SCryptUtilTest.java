@@ -2,10 +2,11 @@
 
 package com.lambdaworks.crypto.test;
 
-import com.lambdaworks.codec.Base64;
-import com.lambdaworks.crypto.SCryptUtil;
 import org.junit.Assert;
 import org.junit.Test;
+import com.lambdaworks.codec.Base64;
+import pl.cdbr.scrypt.crypto.SCryptUtil;
+
 import static org.junit.Assert.*;
 
 public class SCryptUtilTest {
@@ -17,7 +18,7 @@ public class SCryptUtilTest {
         int r = 8;
         int p = 1;
 
-        String hashed = SCryptUtil.scrypt(passwd, N, r, p);
+        String hashed = SCryptUtil.INSTANCE.scrypt(passwd, N, r, p);
         String[] parts = hashed.split("\\$");
 
         assertEquals(5, parts.length);
@@ -34,10 +35,11 @@ public class SCryptUtilTest {
 
     @Test
     public void check() {
-        String hashed = SCryptUtil.scrypt(passwd, 16384, 8, 1);
+        String hashed = SCryptUtil.INSTANCE.scrypt(passwd, 16384, 8, 1);
 
-        assertTrue(SCryptUtil.check(passwd, hashed));
-        assertFalse(SCryptUtil.check("s3cr3t", hashed));
+        System.out.println(hashed);
+        assertTrue(SCryptUtil.INSTANCE.check(passwd, hashed));
+        assertFalse(SCryptUtil.INSTANCE.check("s3cr3t", hashed));
     }
 
     @Test
@@ -46,8 +48,8 @@ public class SCryptUtilTest {
         int r = 255;
         int p = 255;
 
-        String hashed = SCryptUtil.scrypt(passwd, N, r, p);
-        assertTrue(SCryptUtil.check(passwd, hashed));
+        String hashed = SCryptUtil.INSTANCE.scrypt(passwd, N, r, p);
+        assertTrue(SCryptUtil.INSTANCE.check(passwd, hashed));
 
         String[] parts = hashed.split("\\$");
         int params = Integer.valueOf(parts[2], 16);
