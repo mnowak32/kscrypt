@@ -1,4 +1,5 @@
-#kscrypt
+kscrypt
+=======
 
 A Kotlin conversion of a [pure Java implementation](https://github.com/wg/scrypt)
 of [scrypt](http://www.tarsnap.com/scrypt/scrypt.pdf).
