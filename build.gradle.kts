@@ -31,3 +31,11 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("jarArtifact") {
+            from(components["java"])
+        }
+    }
+}
+
