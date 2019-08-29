@@ -31,6 +31,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+tasks.withType<Test> {
+    maxHeapSize = "2g"
+}
+
 publishing {
     publications {
         create<MavenPublication>("jarArtifact") {

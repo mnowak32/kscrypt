@@ -4,7 +4,7 @@ package com.lambdaworks.crypto.test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import com.lambdaworks.codec.Base64;
+import codec.Base64;
 import pl.cdbr.scrypt.crypto.SCryptUtil;
 
 import static org.junit.Assert.*;
@@ -37,7 +37,6 @@ public class SCryptUtilTest {
     public void check() {
         String hashed = SCryptUtil.INSTANCE.scrypt(passwd, 16384, 8, 1);
 
-        System.out.println(hashed);
         assertTrue(SCryptUtil.INSTANCE.check(passwd, hashed));
         assertFalse(SCryptUtil.INSTANCE.check("s3cr3t", hashed));
     }

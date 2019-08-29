@@ -3,11 +3,10 @@
 
 package pl.cdbr.scrypt.crypto
 
-import com.lambdaworks.codec.Base64.decode
-import com.lambdaworks.codec.Base64.encode
 import java.io.UnsupportedEncodingException
 import java.security.GeneralSecurityException
 import java.security.SecureRandom
+import java.util.*
 import kotlin.math.pow
 
 /**
@@ -54,8 +53,9 @@ object SCryptUtil {
             val derived = SCrypt.scrypt(passwd.toByteArray(chSet), salt, N, r, p, dkLen)
 
             val params = (log2(N) shl 16 or (r shl 8) or p).toLong().toString(16)
+            val b64 = Base64.getEncoder()
 
-            return "\$s0\$$params\$${String(encode(salt))}\$${String(encode(derived))}"
+            return "\$s0\$$params\$${String(b64.encode(salt))}\$${String(b64.encode(derived))}"
 
         } catch (e: UnsupportedEncodingException) {
             throw IllegalStateException("JVM doesn't support UTF-8?")
@@ -81,9 +81,11 @@ object SCryptUtil {
                 throw IllegalArgumentException("Invalid hashed value")
             }
 
+            val b64 = Base64.getDecoder()
+
             val params = parts[2].toLong(16)
-            val salt = decode(parts[3].toCharArray())
-            val derived0 = decode(parts[4].toCharArray())
+            val salt = b64.decode(parts[3])
+            val derived0 = b64.decode(parts[4])
 
             val n = 2.0.pow((params shr 16 and 0xffff).toDouble()).toInt()
             val r = params.toInt() shr 8 and 0xff
